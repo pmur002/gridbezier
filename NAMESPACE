@@ -1,0 +1,15 @@
+
+importFrom("grid",
+           "gList",
+           "grid.draw",
+           "gTree",
+           "linesGrob",
+           "makeContent",
+           "setChildren")
+
+export("BezierGrob",
+       "grid.Bezier",
+
+       "nSteps")
+
+S3method("makeContent", "Beziergrob")
