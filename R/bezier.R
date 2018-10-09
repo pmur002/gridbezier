@@ -43,23 +43,41 @@ bezSplinePts <- function(x, y, stepFn=nSteps(100)) {
 }
 
 makeContent.Beziergrob <- function(x) {
-    pts <- bezSplinePts(convertX(x$x, "in"),
-                        convertY(x$y, "in"),
-                        x$stepFn)
-    curve <- linesGrob(unit(pts[,1], "in"),
-                       unit(pts[,2], "in"),
-                       x$gp, name="curve")
+    xx <- convertX(x$x, "in", valueOnly=TRUE)
+    yy <- convertY(x$y, "in", valueOnly=TRUE)
+    nx <- length(xx)
+    ny <- length(yy)
+    n <- max(nx, ny)
+    if (nx != ny) {
+        xx <- rep(xx, length.out=n)
+        yy <- rep(yy, length.out=n)
+    }
+    if (!x$open) {
+        xx <- c(xx, xx[1])
+        yy <- c(yy, yy[1])
+    }
+    pts <- bezSplinePts(xx, yy, x$stepFn)
+    if (x$open) {
+        curve <- linesGrob(unit(pts[,1], "in"),
+                           unit(pts[,2], "in"),
+                           name="curve")
+    } else {
+        curve <- polygonGrob(unit(pts[,1], "in"),
+                             unit(pts[,2], "in"),
+                             name="curve")
+    }
     setChildren(x, gList(curve))
 }
 
 BezierGrob <- function(x, y, default.units="npc",
+                       open=TRUE,
                        stepFn=nSteps(100),
                        gp=gpar(), name=NULL) {
     if (!is.unit(x))
         x <- unit(x, default.units)
     if (!is.unit(y))
         y <- unit(y, default.units)
-    gTree(x=x, y=y, stepFn=stepFn, gp=gp, name=name,
+    gTree(x=x, y=y, open=open, stepFn=stepFn, gp=gp, name=name,
           cl="Beziergrob")
 }
 

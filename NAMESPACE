@@ -1,11 +1,5 @@
 
-importFrom("grid",
-           "gList",
-           "grid.draw",
-           "gTree",
-           "linesGrob",
-           "makeContent",
-           "setChildren")
+import("grid")
 
 export("BezierGrob",
        "grid.Bezier",

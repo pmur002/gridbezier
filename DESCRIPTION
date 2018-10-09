@@ -7,5 +7,5 @@ Maintainer: Paul Murrell <paul@stat.auckland.ac.nz>
 Description: Temporary package to experiment with proper Bezier
              curve grob in 'grid' (hopefully to eventually replace
              the poor X-spline approximation in 'grid').
-Imports: grid
+Depends: grid
 License: GPL (>= 2)
