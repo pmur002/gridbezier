@@ -42,7 +42,7 @@ bezSplinePts <- function(x, y, stepFn=nSteps(100)) {
     do.call("rbind", curves)
 }
 
-makeContent.Beziergrob <- function(x) {
+BezierPoints <- function(x) {
     xx <- convertX(x$x, "in", valueOnly=TRUE)
     yy <- convertY(x$y, "in", valueOnly=TRUE)
     nx <- length(xx)
@@ -56,7 +56,11 @@ makeContent.Beziergrob <- function(x) {
         xx <- c(xx, xx[1])
         yy <- c(yy, yy[1])
     }
-    pts <- bezSplinePts(xx, yy, x$stepFn)
+    bezSplinePts(xx, yy, x$stepFn)    
+}
+
+makeContent.Beziergrob <- function(x) {
+    pts <- BezierPoints(x)
     if (x$open) {
         curve <- linesGrob(unit(pts[,1], "in"),
                            unit(pts[,2], "in"),

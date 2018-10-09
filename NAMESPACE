@@ -4,6 +4,8 @@ import("grid")
 export("BezierGrob",
        "grid.Bezier",
 
+       "BezierPoints",
+
        "nSteps")
 
 S3method("makeContent", "Beziergrob")
