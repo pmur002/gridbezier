@@ -4,7 +4,9 @@ import("grid")
 export("BezierGrob",
        "grid.Bezier",
 
+       "BezierNormal",
        "BezierPoints",
+       "BezierTangent",
 
        "nSteps")
 

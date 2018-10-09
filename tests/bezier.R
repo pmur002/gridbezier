@@ -1,6 +1,5 @@
 
 library(gridBezier)
-library(grid)
 
 x <- c(0, .1, .2, .3) + .5
 y <- c(0, .2, .2, 0) + .5
