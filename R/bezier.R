@@ -68,7 +68,7 @@ BezierTangent <- function(x) {
 
 BezierNormal <- function(x) {
     tangent <- BezierTangent(x)
-    cbind(-tangent[,2], tangent[,1])
+    cbind(tangent[,2], -tangent[,1])
 }
 
 ## Just start with single Bezier curve
