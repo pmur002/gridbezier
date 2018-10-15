@@ -9,8 +9,8 @@ tanDiagram <- function(x, y, open=TRUE) {
     grid.draw(bg)
     pts <- BezierPoints(bg)
     tan <- BezierTangent(bg)
-    grid.segments(pts[,1], pts[,2],
-                  pts[,1] + tan[,1], pts[,2] + tan[,2],
+    grid.segments(pts$x, pts$y,
+                  pts$x + tan$x, pts$y + tan$y,
                   default.units="in",
                   gp=gpar(col=rgb(1, 0, 0, .2)))
 }

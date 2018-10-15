@@ -9,8 +9,8 @@ normDiagram <- function(x, y, open=TRUE) {
     grid.draw(bg)
     pts <- BezierPoints(bg)
     norm <- BezierNormal(bg)
-    grid.segments(pts[,1], pts[,2],
-                  pts[,1] + norm[,1], pts[,2] + norm[,2],
+    grid.segments(pts$x, pts$y,
+                  pts$x + norm$x, pts$y + norm$y,
                   default.units="in",
                   gp=gpar(col=rgb(0, 1, 0, .2)))
 }

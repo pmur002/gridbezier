@@ -1,4 +1,5 @@
 
+
 ## Following ...
 ## https://pomax.github.io/bezierinfo/#matrix
 
@@ -44,7 +45,8 @@ bezSplineSlope <- function(x, y, stepFn=nSteps(100)) {
                              bezCurveSlope(x[index], y[index], stepFn)[-1,]
                          }
                      })
-    do.call("rbind", slopes)    
+    list(x=unlist(lapply(slopes, function(c) c[,1])),
+         y=unlist(lapply(slopes, function(c) c[,2])))
 }
 
 BezierTangent <- function(x) {
@@ -62,13 +64,13 @@ BezierTangent <- function(x) {
         yy <- c(yy, yy[1])
     }
     slope <- bezSplineSlope(xx, yy, x$stepFn)
-    len <- sqrt(slope[,1]^2 + slope[,2]^2)
-    slope / cbind(len, len)
+    len <- sqrt(slope$x^2 + slope$y^2)
+    list(x=slope$x/len, y=slope$y/len)
 }
 
 BezierNormal <- function(x) {
     tangent <- BezierTangent(x)
-    cbind(tangent[,2], -tangent[,1])
+    list(x=tangent$y, y=-tangent$x)
 }
 
 ## Just start with single Bezier curve
@@ -102,7 +104,8 @@ bezSplinePts <- function(x, y, stepFn=nSteps(100)) {
                              bezCurvePts(x[index], y[index], stepFn)[-1,]
                          }
                      })
-    do.call("rbind", curves)
+    list(x=unlist(lapply(curves, function(c) c[,1])),
+         y=unlist(lapply(curves, function(c) c[,2])))
 }
 
 BezierPoints <- function(x) {
@@ -125,12 +128,12 @@ BezierPoints <- function(x) {
 makeContent.Beziergrob <- function(x) {
     pts <- BezierPoints(x)
     if (x$open) {
-        curve <- linesGrob(unit(pts[,1], "in"),
-                           unit(pts[,2], "in"),
+        curve <- linesGrob(unit(pts$x, "in"),
+                           unit(pts$y, "in"),
                            name="curve")
     } else {
-        curve <- polygonGrob(unit(pts[,1], "in"),
-                             unit(pts[,2], "in"),
+        curve <- polygonGrob(unit(pts$x, "in"),
+                             unit(pts$y, "in"),
                              name="curve")
     }
     setChildren(x, gList(curve))
