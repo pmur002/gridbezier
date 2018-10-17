@@ -12,11 +12,11 @@ derivMatrix <- rbind(c(-3, 3, 0, 0),
                      c(6, -12, 6, 0),
                      c(-3, 9, -9, 3))
 
-## stepFn is given 'x' and 'y' (each length 4)
-## for the control points;  it must return 't' between 0 and 1
+## stepFn is given 'x' and 'y' (each length 4) 
+## for the control points and a range for 't'
 nSteps <- function(n) {
-    function(x, y) {
-        seq(0, 1, length.out=n)
+    function(x, y, range=c(0, 1)) {
+        seq(range[1], range[2], length.out=round(n*(abs(diff(range)))))
     }
 }
 
@@ -75,8 +75,8 @@ BezierNormal <- function(x) {
 
 ## Just start with single Bezier curve
 ## 'x' and 'y' must be length 4
-bezCurvePts <- function(x, y, stepFn=nSteps(100)) {
-    t <- stepFn(x, y)
+bezCurvePts <- function(x, y, stepFn=nSteps(100), range=c(0, 1)) {
+    t <- stepFn(x, y, range)
     t2 <- t*t
     t3 <- t2*t
     tmatrix <- cbind(1, t, t2, t3)
@@ -88,7 +88,7 @@ bezCurvePts <- function(x, y, stepFn=nSteps(100)) {
 
 ## Expand to Bezier spline
 ## 'x' and 'y' must be length multiple-of-three-plus-one (and the same length)
-bezSplinePts <- function(x, y, stepFn=nSteps(100)) {
+bezSplinePts <- function(x, y, stepFn=nSteps(100), range=c(0, 1)) {
     ncurves <- (length(x) - 1) %/% 3
     if (ncurves*3 + 1 != length(x)) 
         stop("Invalid number of control points")
@@ -98,17 +98,17 @@ bezSplinePts <- function(x, y, stepFn=nSteps(100)) {
                      function(i) {
                          index <- ((i-1)*3 + 1):(i*3 + 1)
                          if (i == 1) {
-                             bezCurvePts(x[index], y[index], stepFn)
+                             bezCurvePts(x[index], y[index], stepFn, range)
                          } else {
                              ## Drop first point to avoid duplication
-                             bezCurvePts(x[index], y[index], stepFn)[-1,]
+                             bezCurvePts(x[index], y[index], stepFn, range)[-1,]
                          }
                      })
     list(x=unlist(lapply(curves, function(c) c[,1])),
          y=unlist(lapply(curves, function(c) c[,2])))
 }
 
-BezierPoints <- function(x) {
+BezierPoints <- function(x, range=c(0, 1)) {
     xx <- convertX(x$x, "in", valueOnly=TRUE)
     yy <- convertY(x$y, "in", valueOnly=TRUE)
     nx <- length(xx)
@@ -122,7 +122,7 @@ BezierPoints <- function(x) {
         xx <- c(xx, xx[1])
         yy <- c(yy, yy[1])
     }
-    bezSplinePts(xx, yy, x$stepFn)    
+    bezSplinePts(xx, yy, x$stepFn, range)    
 }
 
 makeContent.Beziergrob <- function(x) {
