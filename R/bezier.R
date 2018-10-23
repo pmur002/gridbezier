@@ -16,7 +16,9 @@ derivMatrix <- rbind(c(-3, 3, 0, 0),
 ## for the control points and a range for 't'
 nSteps <- function(n) {
     function(x, y, range=c(0, 1)) {
-        seq(range[1], range[2], length.out=round(n*(abs(diff(range)))))
+        seq(range[1], range[2],
+            ## Minimum of 2 steps
+            length.out=max(2, round(n*(abs(diff(range))))))
     }
 }
 
