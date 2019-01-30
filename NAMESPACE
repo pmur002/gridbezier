@@ -3,11 +3,17 @@ import("grid")
 
 export("BezierGrob",
        "grid.Bezier",
+       "grid.quad",
+       "quadGrob",
 
        "BezierNormal",
        "BezierPoints",
        "BezierTangent",
+       "quadNormal",
+       "quadPoints",
+       "quadTangent",
 
        "nSteps")
 
 S3method("makeContent", "Beziergrob")
+S3method("makeContent", "quadgrob")
