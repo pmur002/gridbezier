@@ -10,4 +10,5 @@ Description: Functions for rendering Bezier
              There are also functions for calculating points on curves,
              tangents to curves, and normals to curves.
 Depends: grid
+URL: https://github.com/pmur002/gridbezier,https://stattech.wordpress.fos.auckland.ac.nz/2018/11/02/2018-11-variable-width-bezier-splines-in-r/
 License: GPL (>= 2)

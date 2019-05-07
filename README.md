@@ -1,5 +1,5 @@
 # gridbezier
-Temporary R package to experiment with proper Bezier curve support in grid
+R package with functions for rendering Bezier curves in 'grid'.
 
 ```
 library(devtools)
