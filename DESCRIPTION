@@ -1,11 +1,12 @@
 Package: gridBezier
 Type: Package
 Title: Bezier Curves in 'grid'
-Version: 1.1-0
+Version: 1.1-1
 Author: Paul Murrell
 Maintainer: Paul Murrell <paul@stat.auckland.ac.nz>
 Description: Functions for rendering Bezier
-             curves in 'grid'.  
+             curves (Pomax, 2018) <https://pomax.github.io/bezierinfo/>
+             in 'grid'.  
              There is support for both quadratic and cubic Bezier curves.
              There are also functions for calculating points on curves,
              tangents to curves, and normals to curves.
